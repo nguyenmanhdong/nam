@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <title>🍄 Phân loại Nấm bằng ID3</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body { background: #f8fafc; }
+      .card { border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+      .btn-primary { background: #5b8ef1; border: none; border-radius: 10px; }
+      .result { font-size: 1.3rem; margin-top: 1rem; }
+    </style>
+  </head>
+  <body>
+    <div class="container py-4">
+      <h1 class="text-center mb-4">🍄 Phân loại Nấm (ID3)</h1>
+      <div class="card p-4">
+        <form method="post">
+          <div class="row">
+            {% for attr, values in attrs.items() %}
+            <div class="col-md-4 mb-3">
+              <label class="form-label"><b>{{attr}}</b></label>
+              <select class="form-select" name="{{attr}}" required>
+                <option value="">-- chọn --</option>
+                {% for v in values %}
+                <option value="{{v}}" {% if form.get(attr)==v %}selected{% endif %}>{{v}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            {% endfor %}
+          </div>
+          <button class="btn btn-primary w-100">🔮 Dự đoán</button>
+        </form>
+
+        {% if result %}
+        <div class="result text-center">
+          <div class="alert {% if raw=='p' %}alert-danger{% else %}alert-success{% endif %}">
+            <b>Kết quả:</b> {{result}}
+          </div>
+          <small class="text-muted">Nhãn gốc: {{raw}}</small>
+        </div>
+        {% endif %}
+
+        <p class="text-danger mt-3">
+          <b>⚠️ Lưu ý:</b> Ứng dụng chỉ dùng cho học tập. Không dùng để ăn nấm thật!
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
